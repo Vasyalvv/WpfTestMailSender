@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Net;
+using System.Net.Mail;
 
 namespace WpfTestMailSender
 {
@@ -22,6 +24,39 @@ namespace WpfTestMailSender
         public WpfMailSender()
         {
             InitializeComponent();
+        }
+
+        private void btnSendEmail_Click(object sender, RoutedEventArgs e)
+        {
+            List<string> listStrMails = new List<string> { "lihobabin@polymetal.kz" };
+            string strPassword = passwordBox.Password;
+            foreach (string mail in listStrMails)
+            {
+                using (MailMessage mm = new MailMessage("vasyalvv@gmail.com", mail))
+                {
+                    mm.Subject = "Привет от C#";
+                    mm.Body = "Hello? world!";
+                    mm.IsBodyHtml = false;
+
+                    using (SmtpClient sc = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        sc.EnableSsl = true;
+                        sc.UseDefaultCredentials = false;
+                        sc.Credentials = new NetworkCredential { UserName = "vasyalvv@gmail.com" , SecurePassword=passwordBox.SecurePassword };
+                        
+                        try
+                        {
+                            sc.Send(mm);
+                        }
+                        catch (Exception ex)
+                        {
+
+                            MessageBox.Show("Невозможно отправить письмо " + ex.ToString());
+                        }
+                    }
+                }
+            }
+            MessageBox.Show("Работа завершена");
         }
     }
 }
