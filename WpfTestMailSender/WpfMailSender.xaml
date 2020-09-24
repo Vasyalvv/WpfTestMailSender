@@ -5,10 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTestMailSender"
         mc:Ignorable="d"
-        Title="WpfMailSender" Height="450" Width="800">
+        Title="WpfMailSender" Height="250.5" Width="260">
     <Grid>
-        <Button x:Name="btnSendEmail" Content="Отправить email" HorizontalAlignment="Left" Margin="116,242,0,0" VerticalAlignment="Top" Width="158" RenderTransformOrigin="0.5,0.5" Click="btnSendEmail_Click"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="116,214,0,0" VerticalAlignment="Top" Height="23" Width="158"/>
+        <Button x:Name="btnSendEmail" Content="Отправить email" HorizontalAlignment="Left" Margin="64,196,0,0" VerticalAlignment="Top" Width="158" RenderTransformOrigin="0.5,0.5" Click="btnSendEmail_Click"/>
+        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="64,168,0,0" VerticalAlignment="Top" Height="23" Width="158"/>
+        <Label Content="Пароль" HorizontalAlignment="Left" Margin="16,172,0,0" VerticalAlignment="Top" Foreground="Black"/>
+        <TextBox x:Name="txtBody" HorizontalAlignment="Left" Height="114" Margin="64,49,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="158"/>
+        <TextBox x:Name="txtSubject" HorizontalAlignment="Left" Height="25" Margin="64,19,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="158" MaxLines="1"/>
+        <Label Content="Текст" HorizontalAlignment="Left" Margin="28,52,0,0" VerticalAlignment="Top" Foreground="Black"/>
+        <Label Content="Тема" HorizontalAlignment="Left" Margin="30,24,0,0" VerticalAlignment="Top" Foreground="Black"/>
+
 
 
     </Grid>

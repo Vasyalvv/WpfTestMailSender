@@ -28,35 +28,37 @@ namespace WpfTestMailSender
 
         private void btnSendEmail_Click(object sender, RoutedEventArgs e)
         {
-            List<string> listStrMails = new List<string> { "lihobabin@polymetal.kz" };
-            string strPassword = passwordBox.Password;
-            foreach (string mail in listStrMails)
+
+            EmailSendServiceClass emailSendServiceClass = new EmailSendServiceClass(new NetworkCredential { UserName = HelperClass.SenderEmail, SecurePassword = passwordBox.SecurePassword });
+
+            //Добавляем адресатов
+            emailSendServiceClass.AddDestinationEmail(HelperClass.DestinationEmails[0]);
+            emailSendServiceClass.AddDestinationEmail(HelperClass.DestinationEmails[1]);
+            emailSendServiceClass.AddDestinationEmail(HelperClass.DestinationEmails[2]);
+
+            //Указываем отправителя
+            emailSendServiceClass.Sender = HelperClass.SenderEmail;
+
+            //Текст и тема письма
+            emailSendServiceClass.Subject = txtSubject.Text;
+            emailSendServiceClass.Body = txtBody.Text;
+
+            //Данные SMTP сервера
+            emailSendServiceClass.SmtpServer = HelperClass.GmailSmtpServer;
+            emailSendServiceClass.SmtpServerPort = HelperClass.GmailSmtpServerPort;
+
+            if (emailSendServiceClass.Send() != 0)
             {
-                using (MailMessage mm = new MailMessage("vasyalvv@gmail.com", mail))
-                {
-                    mm.Subject = "Привет от C#";
-                    mm.Body = "Hello? world!";
-                    mm.IsBodyHtml = false;
-
-                    using (SmtpClient sc = new SmtpClient("smtp.gmail.com", 587))
-                    {
-                        sc.EnableSsl = true;
-                        sc.UseDefaultCredentials = false;
-                        sc.Credentials = new NetworkCredential { UserName = "vasyalvv@gmail.com" , SecurePassword=passwordBox.SecurePassword };
-                        
-                        try
-                        {
-                            sc.Send(mm);
-                        }
-                        catch (Exception ex)
-                        {
-
-                            MessageBox.Show("Невозможно отправить письмо " + ex.ToString());
-                        }
-                    }
-                }
+                MessageWindow mw = new MessageWindow();
+                mw.SetMessage (emailSendServiceClass.LastError);
+                mw.SetDescription(emailSendServiceClass.ErrorDescrition);
+                mw.Show();
             }
-            MessageBox.Show("Работа завершена");
+            else
+            {
+                SendEndWindow sew = new SendEndWindow();
+                sew.ShowDialog();
+            }
         }
     }
 }
