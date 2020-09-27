@@ -162,7 +162,42 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="Статистика"></TabItem>
+            <TabItem Header="Статистика">
+                <Grid Margin="10">
+                    <Grid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <Trigger Property="Grid.Column" Value="0">
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                                </Trigger>
+                                <Trigger Property="Grid.Column" Value="1">
+                                    <Setter Property="Margin" Value="5,0,0,0"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="0" Text="Число отправленных писем:"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="5"/>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Число отправителей в базе:"/>
+                    <TextBlock Grid.Column="1" Grid.Row="1" Text="5"/>
+                    <TextBlock Grid.Column="0" Grid.Row="2" Text="Число получателей в базе:"/>
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="5"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" Text="Число запусков:"/>
+                    <TextBlock Grid.Column="1" Grid.Row="3" Text="5"/>
+                </Grid>                   
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
