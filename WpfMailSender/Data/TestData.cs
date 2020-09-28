@@ -4,6 +4,9 @@ using WpfMailSender.Models;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using LibMailSender.Service;
+
+
 
 namespace WpfMailSender.Data
 {
@@ -30,7 +33,7 @@ namespace WpfMailSender.Data
             {
                 Address = $"smtp.server{i}.com",
                 Login = $"Login-{i}",
-                Password = $"Password-{i}",
+                Password = TextEncoder.Encode($"Password-{i}"),
                 UseSSL = i % 2 == 0
             }
             ).ToList();

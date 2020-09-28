@@ -40,7 +40,7 @@
                     <ToolBarTray DockPanel.Dock="Top">
                         <ToolBar Header="Срвера" Band="0">
                             <ComboBox MinWidth="120" MaxWidth="200" Margin="32,0,0,0" SelectedIndex="0" ItemsSource="{x:Static data:TestData.Servers}"
-                                      DisplayMemberPath="Address"/>
+                                      Name="ServersList" DisplayMemberPath="Address"/>
                             <Button>
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
                             </Button>
@@ -52,7 +52,7 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
-                            <ComboBox MinWidth="120" MaxWidth="200" SelectedIndex="1" ItemsSource="{x:Static data:TestData.Senders}">
+                            <ComboBox Name="SendersList" MinWidth="120" MaxWidth="200" SelectedIndex="1" ItemsSource="{x:Static data:TestData.Senders}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="m:Sender">
                                         <StackPanel>
@@ -89,7 +89,7 @@
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Header="Список получателей">
-                        <DataGrid ItemsSource="{x:Static data:TestData.Recipients}" 
+                        <DataGrid Name="RecipientsList" ItemsSource="{x:Static data:TestData.Recipients}" 
                                   AutoGenerateColumns="False"
                                   GridLinesVisibility="Vertical"
                                   AlternatingRowBackground="LightBlue"
@@ -120,7 +120,7 @@
                                         <Setter Property="Background" Value="White"/>
                                     </Style>
                                 </StackPanel.Resources>
-                                <Button Content="Отправить"/>                                
+                                <Button Content="Отправить" Click="SendButtonClick"/>                                
                                 <Button Content="Запланировать"/>
                             </StackPanel>
                         </StackPanel>
