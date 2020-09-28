@@ -10,7 +10,7 @@ namespace WpfMailSender.Models
     {
         public string Address { get; set; }
 
-        private int _Port;
+        private int _Port=25;
 
         public int Port
         {
