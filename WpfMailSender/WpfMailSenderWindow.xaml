@@ -2,6 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMailSender"
         mc:Ignorable="d"
@@ -41,9 +42,15 @@
                                 <ComboBoxItem>smtp.gmail.com:587</ComboBoxItem>
                                 <ComboBoxItem>smtp.mail.ru:25</ComboBoxItem>
                             </ComboBox>
-                            <Button Content="Add"/>
-                            <Button Content="Edit"/>
-                            <Button Content="Del"/>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
+                            </Button>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
+                            </Button>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
+                            </Button>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
                             <ComboBox MinWidth="120" MaxWidth="200" SelectedIndex="1">
@@ -51,17 +58,31 @@
                                 <ComboBoxItem>Петрович</ComboBoxItem>
                                 <ComboBoxItem>Сидорович</ComboBoxItem>
                             </ComboBox>
-                            <Button Content="Add"/>
-                            <Button Content="Edit"/>
-                            <Button Content="Del"/>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
+                            </Button>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
+                            </Button>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
+                            </Button>
                         </ToolBar>
                         <ToolBar Header="Перейти в планировщик" Band="0">
-                            <Button Content="Перейти"/>
+                            <Button>
+                                <fa:ImageAwesome Icon="Regular_Clock" Height="12" Foreground="DarkBlue"/>
+                            </Button>
                         </ToolBar>
                         <ToolBar Header="Получатели" Band="1">
-                            <Button Content="Add"/>
-                            <Button Content="Edit"/>
-                            <Button Content="Del"/>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
+                            </Button>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
+                            </Button>
+                            <Button>
+                                <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
+                            </Button>
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Header="Список получателей">
