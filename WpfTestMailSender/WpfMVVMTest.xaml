@@ -6,7 +6,8 @@
         xmlns:vm="clr-namespace:WpfTestMailSender.ViewModels"
         xmlns:local="clr-namespace:WpfTestMailSender"
         mc:Ignorable="d"
-        Title="{Binding Title}" Height="450" Width="800">
+        Title="{Binding Title}" Height="450" Width="800"
+        Topmost="{Binding ElementName=IsTopMost,Path=IsChecked}">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -32,5 +33,9 @@
         </Ellipse>
         <TextBlock Text="{Binding CurrentTime, ConverterCulture=ru-Ru, StringFormat=HH:mm:ss:ffff}"
                    HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <CheckBox Content="Включить таймер" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,0,100,0"
+                  Foreground="Black" IsChecked="{Binding TimerEnabled}"/>
+        <CheckBox Content="Top most" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,21,147,0"
+                  Foreground="Black" Name="IsTopMost"/>
     </Grid>
 </Window>

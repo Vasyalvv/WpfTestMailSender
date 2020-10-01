@@ -24,6 +24,20 @@ namespace WpfTestMailSender.ViewModels
         }
 
         public DateTime CurrentTime => DateTime.Now;
+private bool _TimerEnabled = true;
+
+        public bool TimerEnabled
+        {
+            get => _TimerEnabled;
+            set
+            {
+                if (!Set(ref _TimerEnabled, value)) return;
+                _Timer.Enabled = value;
+            }
+        }
+
+        
+
 
         private readonly Timer _Timer;
 
