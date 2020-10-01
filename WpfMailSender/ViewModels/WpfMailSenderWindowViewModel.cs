@@ -19,6 +19,8 @@ namespace WpfMailSender.ViewModels
         #region Свойства/Поля
 
 
+        public StatisticViewModel Statistic { get; } = new StatisticViewModel();
+
         private string _Title = "Тестовое окно";
 
         public string Title
@@ -151,6 +153,8 @@ namespace WpfMailSender.ViewModels
 
             IMailSender mailSender = _MailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
             mailSender.Send(sender.Address, recipient.Address, message.Subject, message.Body);
+
+            Statistic.MessageSend();
         }
         #endregion
 

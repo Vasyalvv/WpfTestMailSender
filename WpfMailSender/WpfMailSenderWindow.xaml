@@ -126,7 +126,7 @@
                                         <Setter Property="Background" Value="White"/>
                                     </Style>
                                 </StackPanel.Resources>
-                                <Button Content="Отправить"/>                                
+                                <Button Content="Отправить" Command="{Binding SendMailCommand}"/>                                
                                 <Button Content="Запланировать"/>
                             </StackPanel>
                         </StackPanel>
@@ -223,7 +223,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="0" Text="Число отправленных писем:"/>
-                    <TextBlock Grid.Column="1" Grid.Row="0" Text="5"/>
+                    <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding Statistic.SendMessagesCount}"/>
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="Число отправителей в базе:"/>
                     <TextBlock Grid.Column="1" Grid.Row="1" Text="5"/>
                     <TextBlock Grid.Column="0" Grid.Row="2" Text="Число получателей в базе:"/>

@@ -45,6 +45,7 @@
     <Compile Include="MailScheduler.cs" />
     <Compile Include="MailSenderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\DebugMailService.cs" />
     <Compile Include="Service\SmtpMailService.cs" />
     <Compile Include="Service\TextEncoder.cs" />
   </ItemGroup>
