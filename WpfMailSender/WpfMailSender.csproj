@@ -80,10 +80,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Data\TestData.cs" />
+    <Compile Include="Infrastructure\Commands\Base\Command.cs" />
+    <Compile Include="Infrastructure\Commands\CloseWindowCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LambdaCommand.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Recipient.cs" />
     <Compile Include="Models\Sender.cs" />
     <Compile Include="Models\Server.cs" />
+    <Compile Include="ViewModels\Base\ViewModel.cs" />
+    <Compile Include="ViewModels\WpfMailSenderWindowViewModel.cs" />
     <Compile Include="WpfMailSenderWindow.xaml.cs">
       <DependentUpon>WpfMailSenderWindow.xaml</DependentUpon>
     </Compile>
@@ -149,5 +154,6 @@
       <Name>LibMailSender</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
