@@ -37,5 +37,6 @@
                   Foreground="Black" IsChecked="{Binding TimerEnabled}"/>
         <CheckBox Content="Top most" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,21,147,0"
                   Foreground="Black" Name="IsTopMost"/>
+        <Button Content="Close Window" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,30,5,0"/>
     </Grid>
 </Window>
