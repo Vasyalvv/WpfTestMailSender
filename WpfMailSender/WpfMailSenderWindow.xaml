@@ -7,8 +7,10 @@
         xmlns:m="clr-namespace:WpfMailSender.Models"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfMailSender"
+        DataContext="{Binding Source={StaticResource Locator}, Path=WpfMailSenderWindowModel}"
         mc:Ignorable="d"
-        Title="WpfMailSenderWindow" Height="450" Width="800">
+        Title="{Binding Title}" 
+        Height="450" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
@@ -39,8 +41,8 @@
                 <DockPanel>
                     <ToolBarTray DockPanel.Dock="Top">
                         <ToolBar Header="Срвера" Band="0">
-                            <ComboBox MinWidth="120" MaxWidth="200" Margin="32,0,0,0" SelectedIndex="0" ItemsSource="{x:Static data:TestData.Servers}"
-                                      Name="ServersList" DisplayMemberPath="Address"/>
+                            <ComboBox MinWidth="120" MaxWidth="200" Margin="32,0,0,0" SelectedIndex="0" ItemsSource="{Binding Servers}"
+                                      Name="ServersList" DisplayMemberPath="Address" SelectedItem="{Binding SelectedServer}"/>
                             <Button>
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
                             </Button>
@@ -52,7 +54,8 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Отправители" Band="1">
-                            <ComboBox Name="SendersList" MinWidth="120" MaxWidth="200" SelectedIndex="1" ItemsSource="{x:Static data:TestData.Senders}">
+                            <ComboBox Name="SendersList" MinWidth="120" MaxWidth="200" SelectedIndex="1" ItemsSource="{Binding Senders}"
+                                      SelectedItem="{Binding SelectedSender}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate DataType="m:Sender">
                                         <StackPanel>
@@ -89,7 +92,8 @@
                         </ToolBar>
                     </ToolBarTray>
                     <GroupBox Header="Список получателей">
-                        <DataGrid Name="RecipientsList" ItemsSource="{x:Static data:TestData.Recipients}" 
+                        <DataGrid Name="RecipientsList" ItemsSource="{Binding Recipients}" 
+                                  SelectedItem="{Binding SelectedRecipient}"
                                   AutoGenerateColumns="False"
                                   GridLinesVisibility="Vertical"
                                   AlternatingRowBackground="LightBlue"
@@ -120,7 +124,7 @@
                                         <Setter Property="Background" Value="White"/>
                                     </Style>
                                 </StackPanel.Resources>
-                                <Button Content="Отправить" Click="SendButtonClick"/>                                
+                                <Button Content="Отправить"/>                                
                                 <Button Content="Запланировать"/>
                             </StackPanel>
                         </StackPanel>
@@ -172,8 +176,8 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <GroupBox Grid.Column="0" Header="Список писем">
-                        <ListBox Name="MessagesList" ItemsSource="{x:Static data:TestData.Messages}"
-                                 DisplayMemberPath="Subject">
+                        <ListBox Name="MessagesList" ItemsSource="{Binding Messages}"
+                                 DisplayMemberPath="Subject" SelectedItem="{Binding SelectedMessage}">
 
                         </ListBox>
                     </GroupBox>

@@ -11,11 +11,12 @@ using WpfTestMailSender.ViewModels.Base;
 
 namespace WpfTestMailSender.ViewModels
 {
-    class MainWindowViewModel:ViewModel
+    class MainWindowViewModel : ViewModel
     {
         private string _Title = "Тестовое окно";
 
-        public string Title {
+        public string Title
+        {
             get => _Title;
             set => Set(ref _Title, value);
             //set
@@ -27,7 +28,7 @@ namespace WpfTestMailSender.ViewModels
         }
 
         public DateTime CurrentTime => DateTime.Now;
-private bool _TimerEnabled = true;
+        private bool _TimerEnabled = true;
 
         public bool TimerEnabled
         {
@@ -45,7 +46,7 @@ private bool _TimerEnabled = true;
         private ICommand _ShowDialogCommand;
 
         public ICommand ShowDialogCommand => _ShowDialogCommand
-            ??  new LambdaCommand(OnShowDialogCommandExecute);
+            ?? new LambdaCommand(OnShowDialogCommandExecute);
 
         private void OnShowDialogCommandExecute(object obj)
         {
