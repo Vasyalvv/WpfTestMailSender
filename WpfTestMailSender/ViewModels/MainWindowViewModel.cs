@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
+using System.Windows.Input;
+using WpfTestMailSender.Infrastructure.Commands;
 using WpfTestMailSender.ViewModels.Base;
 
 namespace WpfTestMailSender.ViewModels
@@ -36,10 +39,18 @@ private bool _TimerEnabled = true;
             }
         }
 
-        
-
 
         private readonly Timer _Timer;
+
+        private ICommand _ShowDialogCommand;
+
+        public ICommand ShowDialogCommand => _ShowDialogCommand
+            ??  new LambdaCommand(OnShowDialogCommandExecute);
+
+        private void OnShowDialogCommandExecute(object obj)
+        {
+            MessageBox.Show("Hello World!");
+        }
 
         public MainWindowViewModel()
         {

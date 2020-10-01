@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:WpfTestMailSender.ViewModels"
+        xmlns:commands="clr-namespace:WpfTestMailSender.Infrastructure.Commands"
         xmlns:local="clr-namespace:WpfTestMailSender"
         mc:Ignorable="d"
         Title="{Binding Title}" Height="450" Width="800"
@@ -37,6 +38,12 @@
                   Foreground="Black" IsChecked="{Binding TimerEnabled}"/>
         <CheckBox Content="Top most" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,21,147,0"
                   Foreground="Black" Name="IsTopMost"/>
-        <Button Content="Close Window" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,30,5,0"/>
+        <Button Content="Close Window" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,30,5,0">
+            <Button.Command>
+                <commands:CloseWindowCommand/>
+            </Button.Command>
+        </Button>
+        <Button Content="Hello World!" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,60,5,0" Height="16" Width="78"
+                Command="{Binding Path=ShowDialogCommand}"/>
     </Grid>
 </Window>

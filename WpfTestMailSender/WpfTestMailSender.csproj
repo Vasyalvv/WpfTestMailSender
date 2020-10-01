@@ -61,6 +61,8 @@
     <Compile Include="EmailSendServiceClass.cs" />
     <Compile Include="HelperClass.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
+    <Compile Include="Infrastructure\Commands\CloseWindowCommand.cs" />
+    <Compile Include="Infrastructure\Commands\LambdaCommand.cs" />
     <Compile Include="MessageWindow.xaml.cs">
       <DependentUpon>MessageWindow.xaml</DependentUpon>
     </Compile>
