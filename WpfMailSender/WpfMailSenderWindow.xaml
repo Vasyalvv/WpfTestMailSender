@@ -43,13 +43,15 @@
                         <ToolBar Header="Срвера" Band="0">
                             <ComboBox MinWidth="120" MaxWidth="200" Margin="32,0,0,0" SelectedIndex="0" ItemsSource="{Binding Servers}"
                                       Name="ServersList" DisplayMemberPath="Address" SelectedItem="{Binding SelectedServer}"/>
-                            <Button>
+                            <Button Command="{Binding CreateNewServerCommand}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding EditServerCommand}"
+                                    CommandParameter="{Binding SelectedServer}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding DeleteServerCommand}"
+                                    CommandParameter="{Binding SelectedServer}">
                                 <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
                             </Button>
                         </ToolBar>
