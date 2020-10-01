@@ -66,8 +66,13 @@
     <Compile Include="SendEndWindow.xaml.cs">
       <DependentUpon>SendEndWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\Base\ViewModel.cs" />
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="WpfMailSender.xaml.cs">
       <DependentUpon>WpfMailSender.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WpfMVVMTest.xaml.cs">
+      <DependentUpon>WpfMVVMTest.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -110,6 +115,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="WpfMailSender.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WpfMVVMTest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
