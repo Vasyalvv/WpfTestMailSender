@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LibMailSender.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -65,6 +66,7 @@ namespace WpfMailSender.ViewModels
         private Recipient _SelectedRecipient;
         public Recipient SelectedRecipient { get => _SelectedRecipient; set => Set(ref _SelectedRecipient, value); }
 
+        private readonly IMailService _MailService;
         #endregion
 
 
@@ -103,6 +105,8 @@ namespace WpfMailSender.ViewModels
         #region DeleteServerCommand
 
         private ICommand _DeleteServerCommand;
+       
+
         public ICommand DeleteServerCommand => _DeleteServerCommand
             ?? new LambdaCommand(OnDeleteServerCommandExecute, CanDeleteServerCommandExecute);
 
@@ -118,15 +122,47 @@ namespace WpfMailSender.ViewModels
         }
         #endregion
 
+        #region SendMailCommand
+
+        private ICommand _SendMailCommand;
+        public ICommand SendMailCommand => _SendMailCommand
+            ?? new LambdaCommand(OnSendMailCommandExecute, CanSendMailCommandExecute);
+
+        private bool CanSendMailCommandExecute(object arg)
+        {
+            if (SelectedServer is null) return false;
+            if (SelectedSender is null) return false;
+            if (SelectedRecipient is null) return false;
+            if (SelectedMessage is null) return false;
+            return true;
+        }
+
+        private void OnSendMailCommandExecute(object obj)
+        {
+            Server server = SelectedServer;
+            Sender sender = SelectedSender;
+            Recipient recipient = SelectedRecipient;
+            Message message = SelectedMessage;
+
+            if (SelectedServer is null) return;
+            if (SelectedSender is null) return;
+            if (SelectedRecipient is null) return;
+            if (SelectedMessage is null) return;
+
+            IMailSender mailSender = _MailService.GetSender(server.Address, server.Port, server.UseSSL, server.Login, server.Password);
+            mailSender.Send(sender.Address, recipient.Address, message.Subject, message.Body);
+        }
+        #endregion
 
         #endregion
 
-        public WpfMailSenderWindowViewModel()
+        public WpfMailSenderWindowViewModel(IMailService MailService)
         {
             Servers = new ObservableCollection<Server>(TestData.Servers);
             Senders = new ObservableCollection<Sender>(TestData.Senders);
             Recipients = new ObservableCollection<Recipient>(TestData.Recipients);
             Messages = new ObservableCollection<Message>(TestData.Messages);
+            _MailService = MailService;
         }
     }
 }

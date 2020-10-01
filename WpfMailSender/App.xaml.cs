@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using LibMailSender.Interfaces;
+using LibMailSender.Service;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,7 @@ namespace WpfMailSender
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services.AddSingleton<WpfMailSenderWindowViewModel>();
+            services.AddTransient<IMailService, SmtpMailService>();
         }
     }
 }
