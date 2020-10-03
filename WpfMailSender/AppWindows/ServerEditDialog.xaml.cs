@@ -64,6 +64,7 @@ namespace WpfMailSender.AppWindows
             Port = int.Parse(window.ServerPort.Text);
             Login = window.Login.Text;
             Password = window.Password.Password;
+            Description = window.ServerDescription.Text;
 
             return true;
         }
@@ -83,6 +84,16 @@ namespace WpfMailSender.AppWindows
             Password = null;
 
             return ShowDialog("Создать сервер", ref Name, ref Address,ref Port,
+                ref UseSSL, ref Description, ref Login, ref Password);
+        }
+        
+        public static bool Edit(
+            ref string Name, ref string Address,
+            ref int Port, ref bool UseSSL,
+            ref string Description, ref string Login,
+            ref string Password)
+        {
+            return ShowDialog("Создать сервер", ref Name, ref Address, ref Port,
                 ref UseSSL, ref Description, ref Login, ref Password);
         }
     }

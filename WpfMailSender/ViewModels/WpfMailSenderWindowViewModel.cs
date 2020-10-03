@@ -12,6 +12,7 @@ using WpfMailSender.Data;
 using WpfMailSender.Infrastructure.Commands;
 using LibMailSender.Models;
 using WpfMailSender.ViewModels.Base;
+using WpfMailSender.AppWindows;
 
 namespace WpfMailSender.ViewModels
 {
@@ -90,7 +91,24 @@ namespace WpfMailSender.ViewModels
 
         private void OnCreateNewServerCommandExecute(object obj)
         {
-            MessageBox.Show("Создание нового сервера");
+            if (!ServerEditDialog.Create(
+                out var name, out var address, out var port,
+                out var ssl, out var description,
+                out var login, out var password)) return;
+            var server = new Server
+            {
+                Id = Servers.DefaultIfEmpty().Max(s => s?.Id ?? 0) + 1,
+                Name = name,
+                Address = address,
+                Port = port,
+                UseSSL = ssl,
+                Description = description,
+                Login = login,
+                Password = password
+            };
+
+            _ServerStorage.Items.Add(server);
+            Servers.Add(server);
         }
         #endregion
 
@@ -106,7 +124,37 @@ namespace WpfMailSender.ViewModels
         {
             Server server = obj as Server ?? SelectedServer;
             if (server is null) return;
-            MessageBox.Show("Редактирование сервера");
+
+            int serverPosition=Servers.IndexOf(server);
+
+            string name, address, description, login, password;
+            int port;
+            bool ssl;
+
+            name = server.Name;
+            address = server.Address;
+            description = server.Description;
+            login = server.Login;
+            password = server.Password;
+            port = server.Port;
+            ssl = server.UseSSL;
+
+            if(!ServerEditDialog.Edit(
+                ref name, ref address, ref port,
+                ref ssl, ref description,
+                ref login, ref password))return;
+
+            server.Name = name;
+            server.Address = address;
+            server.Description = description;
+            server.Login = login;
+            server.Password = password;
+            server.Port = port;
+            server.UseSSL = ssl;
+
+            Servers.RemoveAt(serverPosition);
+            Servers.Insert(serverPosition, server);
+            SelectedServer = server;
         }
         #endregion
 
@@ -225,6 +273,8 @@ namespace WpfMailSender.ViewModels
             _SenderStorage = SenderStorage;
             _RecipientStorage = RecipientStorage;
             _MessageStorage = MessageStorage;
+
+            if (Servers is null) Servers = new ObservableCollection<Server>();
         }
     }
 }
