@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfMailSender.Models
 {
-    class Sender
+    public class Sender
     {
         public string Name { get; set; }
 

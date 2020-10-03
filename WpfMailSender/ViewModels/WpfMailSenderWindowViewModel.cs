@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -69,6 +70,7 @@ namespace WpfMailSender.ViewModels
         public Recipient SelectedRecipient { get => _SelectedRecipient; set => Set(ref _SelectedRecipient, value); }
 
         private readonly IMailService _MailService;
+        private readonly string __DataFileName = "DataLists.xml";
         #endregion
 
 
@@ -94,7 +96,7 @@ namespace WpfMailSender.ViewModels
         public ICommand EditServerCommand => _EditServerCommand
             ?? new LambdaCommand(OnEditServerCommandExecute, CanEditServerCommandExecute);
 
-        private bool CanEditServerCommandExecute(object arg) => arg is Server || SelectedServer!=null;
+        private bool CanEditServerCommandExecute(object arg) => arg is Server || SelectedServer != null;
 
         private void OnEditServerCommandExecute(object obj)
         {
@@ -107,7 +109,7 @@ namespace WpfMailSender.ViewModels
         #region DeleteServerCommand
 
         private ICommand _DeleteServerCommand;
-       
+
 
         public ICommand DeleteServerCommand => _DeleteServerCommand
             ?? new LambdaCommand(OnDeleteServerCommandExecute, CanDeleteServerCommandExecute);
@@ -158,14 +160,44 @@ namespace WpfMailSender.ViewModels
         }
         #endregion
 
+        #region LoadDataCommand
+
+        private ICommand _LoadDataCommand;
+        public ICommand LoadDataCommand => _LoadDataCommand
+            ?? new LambdaCommand(OnLoadDataCommand);
+
+        private void OnLoadDataCommand(object obj)
+        {
+            var data = File.Exists(__DataFileName)
+                ? TestData.LoadFromXML(__DataFileName)
+                : new TestData();
+            Servers = new ObservableCollection<Server>(data.Servers);
+            Senders = new ObservableCollection<Sender>(data.Senders);
+            Recipients = new ObservableCollection<Recipient>(data.Recipients);
+            Messages = new ObservableCollection<Message>(data.Messages);
+        }
+        #endregion
+
+        #region SaveDataCommand
+
+        private ICommand _SaveDataCommand;
+
+        public ICommand SaveDataCommand => _SaveDataCommand
+            ?? new LambdaCommand(OnSaveDataCommandExecuted);
+
+        private void OnSaveDataCommandExecuted(object obj)
+        {
+            TestData data = new TestData(Servers,Senders,Recipients,Messages);
+
+            data.SaveToFile(__DataFileName);
+        }
+        #endregion
+
         #endregion
 
         public WpfMailSenderWindowViewModel(IMailService MailService)
         {
-            Servers = new ObservableCollection<Server>(TestData.Servers);
-            Senders = new ObservableCollection<Sender>(TestData.Senders);
-            Recipients = new ObservableCollection<Recipient>(TestData.Recipients);
-            Messages = new ObservableCollection<Message>(TestData.Messages);
+
             _MailService = MailService;
         }
     }
