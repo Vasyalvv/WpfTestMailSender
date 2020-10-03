@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSender.Data"
-        xmlns:m="clr-namespace:WpfMailSender.Models"
+        xmlns:m="clr-namespace:LibMailSender.Models"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfMailSender"
@@ -21,7 +21,7 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Создать"/>
-                <MenuItem Header="Открыть"/>
+                <MenuItem Header="Открыть" Command="{Binding LoadDataCommand}"/>
                 <MenuItem Header="Закрыть"/>
                 <MenuItem Header="Сохранить" Command="{Binding SaveDataCommand}"/>
                 <Separator/>

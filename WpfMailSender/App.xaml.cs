@@ -30,11 +30,24 @@ namespace WpfMailSender
         private static void ConfigureServices(HostBuilderContext host, IServiceCollection services)
         {
             services.AddSingleton<WpfMailSenderWindowViewModel>();
-#if DEBUG
-            services.AddTransient<IMailService, DebugMailService>();
+            #if DEBUG
+                services.AddTransient<IMailService, DebugMailService>();
 #else
-            services.AddTransient<IMailService, SmtpMailService>();
+                services.AddTransient<IMailService, SmtpMailService>();
 #endif
+
+            var memory_store = new InMemoryDataStorage();
+            services.AddSingleton<IServerStorage>(memory_store);
+            services.AddSingleton<ISenderStorage>(memory_store);
+            services.AddSingleton<IRecipientStorage>(memory_store);
+            services.AddSingleton<IMessageStorage>(memory_store);
+
+            //const string dataFileName = "MailSenderStorage.xml";
+            //var FileStorage = new DataStorageInXmlFile(dataFileName);
+            //services.AddSingleton<IServerStorage>(FileStorage);
+            //services.AddSingleton<ISenderStorage>(FileStorage);
+            //services.AddSingleton<IRecipientStorage>(FileStorage);
+            //services.AddSingleton<IMessageStorage>(FileStorage);
         }
     }
 }

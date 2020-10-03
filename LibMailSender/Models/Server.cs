@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WpfMailSender.Models
+namespace LibMailSender.Models
 {
     public class Server
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
         public string Address { get; set; }
 
         private int _Port=25;

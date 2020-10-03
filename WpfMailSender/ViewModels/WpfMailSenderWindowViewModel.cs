@@ -10,7 +10,7 @@ using System.Windows;
 using System.Windows.Input;
 using WpfMailSender.Data;
 using WpfMailSender.Infrastructure.Commands;
-using WpfMailSender.Models;
+using LibMailSender.Models;
 using WpfMailSender.ViewModels.Base;
 
 namespace WpfMailSender.ViewModels
@@ -70,6 +70,10 @@ namespace WpfMailSender.ViewModels
         public Recipient SelectedRecipient { get => _SelectedRecipient; set => Set(ref _SelectedRecipient, value); }
 
         private readonly IMailService _MailService;
+        private readonly IServerStorage _ServerStorage;
+        private readonly ISenderStorage _SenderStorage;
+        private readonly IRecipientStorage _RecipientStorage;
+        private readonly IMessageStorage _MessageStorage;
         private readonly string __DataFileName = "DataLists.xml";
         #endregion
 
@@ -164,17 +168,27 @@ namespace WpfMailSender.ViewModels
 
         private ICommand _LoadDataCommand;
         public ICommand LoadDataCommand => _LoadDataCommand
-            ?? new LambdaCommand(OnLoadDataCommand);
+            ?? new LambdaCommand(OnLoadDataCommandExecute);
 
-        private void OnLoadDataCommand(object obj)
+        private void OnLoadDataCommandExecute(object obj)
         {
-            var data = File.Exists(__DataFileName)
-                ? TestData.LoadFromXML(__DataFileName)
-                : new TestData();
-            Servers = new ObservableCollection<Server>(data.Servers);
-            Senders = new ObservableCollection<Sender>(data.Senders);
-            Recipients = new ObservableCollection<Recipient>(data.Recipients);
-            Messages = new ObservableCollection<Message>(data.Messages);
+            //var data = File.Exists(__DataFileName)
+            //    ? TestData.LoadFromXML(__DataFileName)
+            //    : new TestData();
+            //Servers = new ObservableCollection<Server>(data.Servers);
+            //Senders = new ObservableCollection<Sender>(data.Senders);
+            //Recipients = new ObservableCollection<Recipient>(data.Recipients);
+            //Messages = new ObservableCollection<Message>(data.Messages);
+
+            _ServerStorage.Load();
+            _SenderStorage.Load();
+            _RecipientStorage.Load();
+            _MessageStorage.Load();
+
+            Servers = new ObservableCollection<Server>(_ServerStorage.Items);
+            Senders = new ObservableCollection<Sender>(_SenderStorage.Items);
+            Recipients = new ObservableCollection<Recipient>(_RecipientStorage.Items);
+            Messages = new ObservableCollection<Message>(_MessageStorage.Items);
         }
         #endregion
 
@@ -187,18 +201,30 @@ namespace WpfMailSender.ViewModels
 
         private void OnSaveDataCommandExecuted(object obj)
         {
-            TestData data = new TestData(Servers,Senders,Recipients,Messages);
+            //TestData data = new TestData(Servers,Senders,Recipients,Messages);
 
-            data.SaveToFile(__DataFileName);
+            //data.SaveToFile(__DataFileName);
+
+            _ServerStorage.SaveChanges();
+            _SenderStorage.SaveChanges();
+            _RecipientStorage.SaveChanges();
+            _MessageStorage.SaveChanges();
         }
         #endregion
 
         #endregion
 
-        public WpfMailSenderWindowViewModel(IMailService MailService)
+        public WpfMailSenderWindowViewModel(IMailService MailService,
+            IServerStorage ServerStorage, ISenderStorage SenderStorage,
+            IRecipientStorage RecipientStorage, IMessageStorage MessageStorage)
         {
 
             _MailService = MailService;
+
+            _ServerStorage = ServerStorage;
+            _SenderStorage = SenderStorage;
+            _RecipientStorage = RecipientStorage;
+            _MessageStorage = MessageStorage;
         }
     }
 }
