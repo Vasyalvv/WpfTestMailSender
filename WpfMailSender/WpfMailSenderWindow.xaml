@@ -5,6 +5,7 @@
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSender.Data"
         xmlns:m="clr-namespace:LibMailSender.Models"
+        xmlns:views="clr-namespace:WpfMailSender.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfMailSender"
@@ -29,7 +30,6 @@
             </MenuItem>
             <MenuItem Header="Сервис">
                 <MenuItem Header="Параметры"/>
-                <MenuItem Header="Загрузить данные" Command="{Binding LoadDataCommand}"/>
             </MenuItem>
             <MenuItem Header="Помощь">
                 <MenuItem Header="О программе"/>
@@ -73,13 +73,13 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>                                
                             </ComboBox>
-                            <Button>
+                            <Button Command="{Binding CreateNewSenderCommand}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding EditSenderCommand}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding DeleteSenderCommand}">
                                 <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
                             </Button>
                         </ToolBar>
@@ -89,31 +89,18 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Получатели" Band="1">
-                            <Button>
+                            <Button Command="{Binding CreateNewRecipientCommand}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding EditRecipientCommand}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding DeleteRecipientCommand}">
                                 <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <GroupBox Header="Список получателей">
-                        <DataGrid Name="RecipientsList" ItemsSource="{Binding Recipients}" 
-                                  SelectedItem="{Binding SelectedRecipient}"
-                                  AutoGenerateColumns="False"
-                                  GridLinesVisibility="Vertical"
-                                  AlternatingRowBackground="LightBlue"
-                                  VerticalGridLinesBrush="Gray">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MinWidth="30"/>
-                                <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Адрес" MinWidth="160" Binding="{Binding Address}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
+                    <views:RecepientsListView Grid.Row="1"/>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Планировщик">

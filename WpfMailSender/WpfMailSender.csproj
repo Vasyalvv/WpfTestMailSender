@@ -198,6 +198,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppWindows\RecipientEditDialog.xaml.cs">
+      <DependentUpon>RecipientEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppWindows\SenderEditDialog.xaml.cs">
+      <DependentUpon>SenderEditDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AppWindows\ServerEditDialog.xaml.cs">
       <DependentUpon>ServerEditDialog.xaml</DependentUpon>
     </Compile>
@@ -209,6 +215,9 @@
     <Compile Include="ViewModels\LocatorViewModel.cs" />
     <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="ViewModels\WpfMailSenderWindowViewModel.cs" />
+    <Compile Include="Views\RecepientsListView.xaml.cs">
+      <DependentUpon>RecepientsListView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfMailSenderWindow.xaml.cs">
       <DependentUpon>WpfMailSenderWindow.xaml</DependentUpon>
     </Compile>
@@ -241,7 +250,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AppWindows\RecipientEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppWindows\SenderEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AppWindows\ServerEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecepientsListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

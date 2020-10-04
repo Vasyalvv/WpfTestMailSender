@@ -65,6 +65,7 @@ namespace WpfMailSender.AppWindows
             Login = window.Login.Text;
             Password = window.Password.Password;
             Description = window.ServerDescription.Text;
+            UseSSL = (bool)window.ServerSSL.IsChecked;
 
             return true;
         }
@@ -93,7 +94,7 @@ namespace WpfMailSender.AppWindows
             ref string Description, ref string Login,
             ref string Password)
         {
-            return ShowDialog("Создать сервер", ref Name, ref Address, ref Port,
+            return ShowDialog("Редактировать сервер", ref Name, ref Address, ref Port,
                 ref UseSSL, ref Description, ref Login, ref Password);
         }
     }
