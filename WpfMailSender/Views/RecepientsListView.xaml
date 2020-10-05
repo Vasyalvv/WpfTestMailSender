@@ -27,7 +27,8 @@
                   AutoGenerateColumns="False"
                   GridLinesVisibility="Vertical"
                   AlternatingRowBackground="PowderBlue"
-                  VerticalGridLinesBrush="Gray">
+                  VerticalGridLinesBrush="Gray"
+                  IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Имя" MinWidth="120"

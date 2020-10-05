@@ -36,6 +36,8 @@ namespace WpfMailSender
                 services.AddTransient<IMailService, SmtpMailService>();
 #endif
 
+            services.AddSingleton<IEncryptorService, Rfc2898Encryptor>();
+
             //var memory_store = new InMemoryDataStorage();
             //services.AddSingleton<IServerStorage>(memory_store);
             //services.AddSingleton<ISenderStorage>(memory_store);
