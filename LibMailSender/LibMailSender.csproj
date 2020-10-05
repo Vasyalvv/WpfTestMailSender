@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbService.cs" />
+    <Compile Include="Interfaces\IEncryptorService.cs" />
     <Compile Include="Interfaces\IMailService.cs" />
     <Compile Include="Interfaces\IStorage.cs" />
     <Compile Include="MailScheduler.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="Service\DataStorageInXmlFile.cs" />
     <Compile Include="Service\DebugMailService.cs" />
     <Compile Include="Service\InMemoryDataStorage.cs" />
+    <Compile Include="Service\Rfc2898Encryptor.cs" />
     <Compile Include="Service\SmtpMailService.cs" />
     <Compile Include="Service\TextEncoder.cs" />
   </ItemGroup>
