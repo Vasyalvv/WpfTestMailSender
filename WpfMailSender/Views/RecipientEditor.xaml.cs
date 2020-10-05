@@ -24,5 +24,15 @@ namespace WpfMailSender.Views
         {
             InitializeComponent();
         }
+
+        private void OnDataValidationError(object sender, ValidationErrorEventArgs e)
+        {
+            var control = (Control)sender;
+            if (e.Action == ValidationErrorEventAction.Added)
+                control.ToolTip = e.Error.ErrorContent.ToString();
+            else
+                control.ClearValue(ToolTipProperty);
+
+        }
     }
 }
