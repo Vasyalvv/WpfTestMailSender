@@ -100,7 +100,14 @@
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <views:RecepientsListView Grid.Row="1"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                    <views:RecepientsListView Grid.Column="0"/>
+                        <views:RecipientEditor Grid.Column="1"/>
+                    </Grid>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Планировщик">

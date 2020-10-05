@@ -13,7 +13,7 @@ namespace LibMailSender.Models.Base
 
     public abstract class NamedEntity:Entity
     {
-        public string Nmae { get; set; }
+        public string Name { get; set; }
     }
 
     public abstract class Person : NamedEntity

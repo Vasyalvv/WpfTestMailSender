@@ -7,7 +7,7 @@ using LibMailSender.Models.Base;
 
 namespace LibMailSender.Models
 {
-    public class Server : Enity
+    public class Server : Entity
     {
         public string Name { get; set; }
         public string Address { get; set; }

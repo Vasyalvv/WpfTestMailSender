@@ -47,7 +47,6 @@
     <Compile Include="MailScheduler.cs" />
     <Compile Include="MailSenderService.cs" />
     <Compile Include="Models\Base\Entity.cs" />
-    <Compile Include="Models\Enity.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Recipient.cs" />
     <Compile Include="Models\Sender.cs" />
