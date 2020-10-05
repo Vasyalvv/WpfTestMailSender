@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WpfMailSender.Views"             
+             xmlns:local="clr-namespace:WpfMailSender.Views"    
+             xmlns:validation="clr-namespace:WpfMailSender.Infrastructure.ValidationRules"
              >
     <!--DataContext="{Binding Source={StaticResource Locator}, Path=WpfMailSenderWindowModel}"-->
 
@@ -37,8 +38,18 @@
         
         <TextBox Grid.Column="1" Grid.Row="1" 
                  Text="{Binding SelectedRecipient.Name, NotifyOnValidationError=True, ValidatesOnDataErrors=True, ValidatesOnNotifyDataErrors=True, ValidatesOnExceptions=True}"/>
-        
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding SelectedRecipient.Address}"/>
+
+        <TextBox Grid.Column="1" Grid.Row="2">
+            <TextBox.Text>
+                <Binding Path="SelectedRecipient.Address" 
+                         NotifyOnValidationError="True"
+                         UpdateSourceTrigger="PropertyChanged">
+                    <Binding.ValidationRules>
+                        <validation:RegExValidation Pattern="(\w+\.)*\w+@(\w+\.)+[A-Za-z]+" ErrorMessage="Строка адреса имела неверный формат"/>
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
 
         <UniformGrid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Rows="1"
                      VerticalAlignment="Top" HorizontalAlignment="Center"
