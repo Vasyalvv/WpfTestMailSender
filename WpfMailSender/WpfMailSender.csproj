@@ -136,6 +136,9 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.8.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.3.1.8\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -195,18 +198,30 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="AppWindows\RecipientEditDialog.xaml.cs">
+      <DependentUpon>RecipientEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppWindows\SenderEditDialog.xaml.cs">
+      <DependentUpon>SenderEditDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AppWindows\ServerEditDialog.xaml.cs">
+      <DependentUpon>ServerEditDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Data\TestData.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\CloseWindowCommand.cs" />
     <Compile Include="Infrastructure\Commands\LambdaCommand.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Recipient.cs" />
-    <Compile Include="Models\Sender.cs" />
-    <Compile Include="Models\Server.cs" />
+    <Compile Include="Infrastructure\ValidationRules\RegExValidation.cs" />
     <Compile Include="ViewModels\Base\ViewModel.cs" />
     <Compile Include="ViewModels\LocatorViewModel.cs" />
     <Compile Include="ViewModels\StatisticViewModel.cs" />
     <Compile Include="ViewModels\WpfMailSenderWindowViewModel.cs" />
+    <Compile Include="Views\RecepientsListView.xaml.cs">
+      <DependentUpon>RecepientsListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RecipientEditor.xaml.cs">
+      <DependentUpon>RecipientEditor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WpfMailSenderWindow.xaml.cs">
       <DependentUpon>WpfMailSenderWindow.xaml</DependentUpon>
     </Compile>
@@ -239,6 +254,26 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="AppWindows\RecipientEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppWindows\SenderEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AppWindows\ServerEditDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecepientsListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecipientEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WpfMailSenderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

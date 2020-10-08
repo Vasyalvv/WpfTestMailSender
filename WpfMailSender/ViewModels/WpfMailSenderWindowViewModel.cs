@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ using System.Windows;
 using System.Windows.Input;
 using WpfMailSender.Data;
 using WpfMailSender.Infrastructure.Commands;
-using WpfMailSender.Models;
+using LibMailSender.Models;
 using WpfMailSender.ViewModels.Base;
+using WpfMailSender.AppWindows;
 
 namespace WpfMailSender.ViewModels
 {
@@ -69,6 +71,11 @@ namespace WpfMailSender.ViewModels
         public Recipient SelectedRecipient { get => _SelectedRecipient; set => Set(ref _SelectedRecipient, value); }
 
         private readonly IMailService _MailService;
+        private readonly IServerStorage _ServerStorage;
+        private readonly ISenderStorage _SenderStorage;
+        private readonly IRecipientStorage _RecipientStorage;
+        private readonly IMessageStorage _MessageStorage;
+        private readonly string __DataFileName = "DataLists.xml";
         #endregion
 
 
@@ -84,7 +91,24 @@ namespace WpfMailSender.ViewModels
 
         private void OnCreateNewServerCommandExecute(object obj)
         {
-            MessageBox.Show("Создание нового сервера");
+            if (!ServerEditDialog.Create(
+                out var name, out var address, out var port,
+                out var ssl, out var description,
+                out var login, out var password)) return;
+            var server = new Server
+            {
+                Id = Servers.DefaultIfEmpty().Max(s => s?.Id ?? 0) + 1,
+                Name = name,
+                Address = address,
+                Port = port,
+                UseSSL = ssl,
+                Description = description,
+                Login = login,
+                Password = password
+            };
+
+            _ServerStorage.Items.Add(server);
+            Servers.Add(server);
         }
         #endregion
 
@@ -94,20 +118,50 @@ namespace WpfMailSender.ViewModels
         public ICommand EditServerCommand => _EditServerCommand
             ?? new LambdaCommand(OnEditServerCommandExecute, CanEditServerCommandExecute);
 
-        private bool CanEditServerCommandExecute(object arg) => arg is Server || SelectedServer!=null;
+        private bool CanEditServerCommandExecute(object arg) => arg is Server || SelectedServer != null;
 
         private void OnEditServerCommandExecute(object obj)
         {
             Server server = obj as Server ?? SelectedServer;
             if (server is null) return;
-            MessageBox.Show("Редактирование сервера");
+
+            int serverPosition=Servers.IndexOf(server);
+
+            string name, address, description, login, password;
+            int port;
+            bool ssl;
+
+            name = server.Name;
+            address = server.Address;
+            description = server.Description;
+            login = server.Login;
+            password = server.Password;
+            port = server.Port;
+            ssl = server.UseSSL;
+
+            if(!ServerEditDialog.Edit(
+                ref name, ref address, ref port,
+                ref ssl, ref description,
+                ref login, ref password))return;
+
+            server.Name = name;
+            server.Address = address;
+            server.Description = description;
+            server.Login = login;
+            server.Password = password;
+            server.Port = port;
+            server.UseSSL = ssl;
+
+            Servers.RemoveAt(serverPosition);
+            Servers.Insert(serverPosition, server);
+            SelectedServer = server;
         }
         #endregion
 
         #region DeleteServerCommand
 
         private ICommand _DeleteServerCommand;
-       
+
 
         public ICommand DeleteServerCommand => _DeleteServerCommand
             ?? new LambdaCommand(OnDeleteServerCommandExecute, CanDeleteServerCommandExecute);
@@ -121,6 +175,164 @@ namespace WpfMailSender.ViewModels
 
             Servers.Remove(server);
             SelectedServer = Servers.FirstOrDefault();
+        }
+        #endregion
+
+        #region CreateNewSenderCommand
+
+        private ICommand _CreateNewSenderCommand;
+        public ICommand CreateNewSenderCommand => _CreateNewSenderCommand
+            ?? new LambdaCommand(OnCreateNewSenderCommandExecute, CanCreateNewSenderCommandExecute);
+
+        private bool CanCreateNewSenderCommandExecute(object arg) => true;
+
+        private void OnCreateNewSenderCommandExecute(object obj)
+        {
+            if (!SenderEditDialog.Create(
+                out var name, out var address, out var description)) return;
+            var sender = new Sender
+            {
+                Id = Senders.DefaultIfEmpty().Max(s => s?.Id ?? 0) + 1,
+                Name = name,
+                Address = address,
+                Description = description,
+            };
+
+            _SenderStorage.Items.Add(sender);
+            Senders.Add(sender);
+        }
+        #endregion
+
+        #region EditSenderCommand
+
+        private ICommand _EditSenderCommand;
+        public ICommand EditSenderCommand => _EditSenderCommand
+            ?? new LambdaCommand(OnEditSenderCommandExecute, CanEditSenderCommandExecute);
+
+        private bool CanEditSenderCommandExecute(object arg) => arg is Sender || SelectedSender != null;
+
+        private void OnEditSenderCommandExecute(object obj)
+        {
+            Sender sender = obj as Sender ?? SelectedSender;
+            if (sender is null) return;
+
+            int senderPosition = Senders.IndexOf(sender);
+
+            string name, address, description;
+
+            name = sender.Name;
+            address = sender.Address;
+            description = sender.Description;
+
+            if (!SenderEditDialog.Edit(
+                ref name, ref address, ref description)) return;
+
+            sender.Name = name;
+            sender.Address = address;
+            sender.Description = description;
+
+            Senders.RemoveAt(senderPosition);
+            Senders.Insert(senderPosition, sender);
+            SelectedSender = sender;
+        }
+        #endregion
+
+        #region DeleteSenderCommand
+
+        private ICommand _DeleteSenderCommand;
+
+
+        public ICommand DeleteSenderCommand => _DeleteSenderCommand
+            ?? new LambdaCommand(OnDeleteSenderCommandExecute, CanDeleteSenderCommandExecute);
+
+        private bool CanDeleteSenderCommandExecute(object arg) => arg is Sender || SelectedSender != null;
+
+        private void OnDeleteSenderCommandExecute(object obj)
+        {
+            Sender sender = obj as Sender ?? SelectedSender;
+            if (sender is null) return;
+
+            Senders.Remove(sender);
+            SelectedSender = Senders.FirstOrDefault();
+        }
+        #endregion
+
+        #region CreateNewRecipientCommand
+
+        private ICommand _CreateNewRecipientCommand;
+        public ICommand CreateNewRecipientCommand => _CreateNewRecipientCommand
+            ?? new LambdaCommand(OnCreateNewRecipientCommandExecute, CanCreateNewRecipientCommandExecute);
+
+        private bool CanCreateNewRecipientCommandExecute(object arg) => true;
+
+        private void OnCreateNewRecipientCommandExecute(object obj)
+        {
+            if (!RecipientEditDialog.Create(
+                out var name, out var address, out var description)) return;
+            var recipient = new Recipient
+            {
+                Id = Recipients.DefaultIfEmpty().Max(s => s?.Id ?? 0) + 1,
+                Name = name,
+                Address = address,
+                Description = description,
+            };
+
+            _RecipientStorage.Items.Add(recipient);
+            Recipients.Add(recipient);
+        }
+        #endregion
+
+        #region EditRecipientCommand
+
+        private ICommand _EditRecipientCommand;
+        public ICommand EditRecipientCommand => _EditRecipientCommand
+            ?? new LambdaCommand(OnEditRecipientCommandExecute, CanEditRecipientCommandExecute);
+
+        private bool CanEditRecipientCommandExecute(object arg) => arg is Recipient || SelectedRecipient != null;
+
+        private void OnEditRecipientCommandExecute(object obj)
+        {
+            Recipient recipient = obj as Recipient ?? SelectedRecipient;
+            if (recipient is null) return;
+
+            int recipientPosition = Recipients.IndexOf(recipient);
+
+            string name, address, description;
+
+            name = recipient.Name;
+            address = recipient.Address;
+            description = recipient.Description;
+
+            if (!RecipientEditDialog.Edit(
+                ref name, ref address, ref description)) return;
+
+            recipient.Name = name;
+            recipient.Address = address;
+            recipient.Description = description;
+
+            Recipients.RemoveAt(recipientPosition);
+            Recipients.Insert(recipientPosition, recipient);
+            SelectedRecipient = recipient;
+        }
+        #endregion
+
+        #region DeleteSenderCommand
+
+        private ICommand _DeleteRecipientCommand;
+
+
+        public ICommand DeleteRecipientCommand => _DeleteRecipientCommand
+            ?? new LambdaCommand(OnDeleteRecipientCommandExecute, CanDeleteRecipientCommandExecute);
+
+        private bool CanDeleteRecipientCommandExecute(object arg) => arg is Recipient || SelectedRecipient != null;
+
+        private void OnDeleteRecipientCommandExecute(object obj)
+        {
+            Recipient recipient = obj as Recipient ?? SelectedRecipient;
+            if (recipient is null) return;
+
+            Recipients.Remove(recipient);
+            SelectedRecipient = Recipients.FirstOrDefault();
         }
         #endregion
 
@@ -158,15 +370,72 @@ namespace WpfMailSender.ViewModels
         }
         #endregion
 
+        #region LoadDataCommand
+
+        private ICommand _LoadDataCommand;
+        public ICommand LoadDataCommand => _LoadDataCommand
+            ?? new LambdaCommand(OnLoadDataCommandExecute);
+
+        private void OnLoadDataCommandExecute(object obj)
+        {
+            //var data = File.Exists(__DataFileName)
+            //    ? TestData.LoadFromXML(__DataFileName)
+            //    : new TestData();
+            //Servers = new ObservableCollection<Server>(data.Servers);
+            //Senders = new ObservableCollection<Sender>(data.Senders);
+            //Recipients = new ObservableCollection<Recipient>(data.Recipients);
+            //Messages = new ObservableCollection<Message>(data.Messages);
+
+            _ServerStorage.Load();
+            _SenderStorage.Load();
+            _RecipientStorage.Load();
+            _MessageStorage.Load();
+
+            Servers = new ObservableCollection<Server>(_ServerStorage.Items);
+            Senders = new ObservableCollection<Sender>(_SenderStorage.Items);
+            Recipients = new ObservableCollection<Recipient>(_RecipientStorage.Items);
+            Messages = new ObservableCollection<Message>(_MessageStorage.Items);
+        }
         #endregion
 
-        public WpfMailSenderWindowViewModel(IMailService MailService)
+        #region SaveDataCommand
+
+        private ICommand _SaveDataCommand;
+
+        public ICommand SaveDataCommand => _SaveDataCommand
+            ?? new LambdaCommand(OnSaveDataCommandExecuted);
+
+        private void OnSaveDataCommandExecuted(object obj)
         {
-            Servers = new ObservableCollection<Server>(TestData.Servers);
-            Senders = new ObservableCollection<Sender>(TestData.Senders);
-            Recipients = new ObservableCollection<Recipient>(TestData.Recipients);
-            Messages = new ObservableCollection<Message>(TestData.Messages);
+            //TestData data = new TestData(Servers,Senders,Recipients,Messages);
+
+            //data.SaveToFile(__DataFileName);
+
+            _ServerStorage.SaveChanges();
+            _SenderStorage.SaveChanges();
+            _RecipientStorage.SaveChanges();
+            _MessageStorage.SaveChanges();
+        }
+        #endregion
+
+        #endregion
+
+        public WpfMailSenderWindowViewModel(IMailService MailService,
+            IServerStorage ServerStorage, ISenderStorage SenderStorage,
+            IRecipientStorage RecipientStorage, IMessageStorage MessageStorage)
+        {
+
             _MailService = MailService;
+
+            _ServerStorage = ServerStorage;
+            _SenderStorage = SenderStorage;
+            _RecipientStorage = RecipientStorage;
+            _MessageStorage = MessageStorage;
+
+            if (Servers is null) Servers = new ObservableCollection<Server>();
+            if (Senders is null) Senders = new ObservableCollection<Sender>();
+            if (Recipients is null) Recipients = new ObservableCollection<Recipient>();
+            if (Messages is null) Messages = new ObservableCollection<Message>();
         }
     }
 }

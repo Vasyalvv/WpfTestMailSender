@@ -4,20 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:fa="http://schemas.fontawesome.com/icons/"
         xmlns:data="clr-namespace:WpfMailSender.Data"
-        xmlns:m="clr-namespace:WpfMailSender.Models"
+        xmlns:m="clr-namespace:LibMailSender.Models"
+        xmlns:views="clr-namespace:WpfMailSender.Views"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:local="clr-namespace:WpfMailSender"
         DataContext="{Binding Source={StaticResource Locator}, Path=WpfMailSenderWindowModel}"
         mc:Ignorable="d"
         Title="{Binding Title}" 
         Height="450" Width="800">
+    <!--<i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>-->
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
                 <MenuItem Header="Создать"/>
-                <MenuItem Header="Открыть"/>
+                <MenuItem Header="Открыть" Command="{Binding LoadDataCommand}"/>
                 <MenuItem Header="Закрыть"/>
-                <MenuItem Header="Сохранить"/>
+                <MenuItem Header="Сохранить" Command="{Binding SaveDataCommand}"/>
                 <Separator/>
                 <MenuItem Header="Выход"/>
             </MenuItem>
@@ -66,13 +73,13 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>                                
                             </ComboBox>
-                            <Button>
+                            <Button Command="{Binding CreateNewSenderCommand}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding EditSenderCommand}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding DeleteSenderCommand}">
                                 <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
                             </Button>
                         </ToolBar>
@@ -82,31 +89,25 @@
                             </Button>
                         </ToolBar>
                         <ToolBar Header="Получатели" Band="1">
-                            <Button>
+                            <Button Command="{Binding CreateNewRecipientCommand}">
                                 <fa:ImageAwesome Icon="Solid_PlusCircle" Height="12" Foreground="Blue"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding EditRecipientCommand}">
                                 <fa:ImageAwesome Icon="Solid_Edit" Height="12" Foreground="OrangeRed"/>
                             </Button>
-                            <Button>
+                            <Button Command="{Binding DeleteRecipientCommand}">
                                 <fa:ImageAwesome Icon="Solid_Trash" Height="12" Foreground="Red"/>
                             </Button>
                         </ToolBar>
                     </ToolBarTray>
-                    <GroupBox Header="Список получателей">
-                        <DataGrid Name="RecipientsList" ItemsSource="{Binding Recipients}" 
-                                  SelectedItem="{Binding SelectedRecipient}"
-                                  AutoGenerateColumns="False"
-                                  GridLinesVisibility="Vertical"
-                                  AlternatingRowBackground="LightBlue"
-                                  VerticalGridLinesBrush="Gray">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" MinWidth="30"/>
-                                <DataGridTextColumn Header="Имя" Width="*" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Адрес" MinWidth="160" Binding="{Binding Address}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </GroupBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
+                    <views:RecepientsListView Grid.Column="0"/>
+                        <views:RecipientEditor Grid.Column="1"/>
+                    </Grid>
                 </DockPanel>
             </TabItem>
             <TabItem Header="Планировщик">

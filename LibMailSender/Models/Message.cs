@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibMailSender.Models.Base;
 
-namespace WpfMailSender.Models
+namespace LibMailSender.Models
 {
-    class Message
+    public class Message:Entity
     {
         public string Subject { get; set; }
 

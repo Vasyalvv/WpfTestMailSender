@@ -10,22 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using LibMailSender.Models;
-using LibMailSender;
-using System.Net.Mail;
 
-namespace WpfMailSender
+namespace WpfMailSender.Views
 {
     /// <summary>
-    /// Логика взаимодействия для WpfMailSenderWindow.xaml
+    /// Логика взаимодействия для RecepientsListView.xaml
     /// </summary>
-    public partial class WpfMailSenderWindow : Window
+    public partial class RecepientsListView : UserControl
     {
-        public WpfMailSenderWindow()
+        public RecepientsListView()
         {
             InitializeComponent();
         }
-
     }
 }

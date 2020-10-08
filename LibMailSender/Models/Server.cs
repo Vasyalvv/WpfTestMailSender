@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibMailSender.Models.Base;
 
-namespace WpfMailSender.Models
+namespace LibMailSender.Models
 {
-    class Server
+    public class Server : Entity
     {
+        public string Name { get; set; }
         public string Address { get; set; }
 
         private int _Port=25;
@@ -29,7 +31,7 @@ namespace WpfMailSender.Models
 
         public string Password { get; set; }
 
-        public string Description { get;  }
+        public string Description { get; set; }
 
     }
 }
