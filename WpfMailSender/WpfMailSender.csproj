@@ -274,6 +274,7 @@
       <DependentUpon>ServerEditDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\MailSenderDB.cs" />
+    <Compile Include="Data\MailSenderDBContextInitializer.cs" />
     <Compile Include="Data\MailSenderDBInitializer.cs" />
     <Compile Include="Data\Mirgations\20201015162321_Initial.cs" />
     <Compile Include="Data\Mirgations\20201015162321_Initial.designer.cs">
@@ -284,6 +285,8 @@
       <DependentUpon>20201015165052_SchedulerTasks.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Mirgations\MailSenderDBModelSnapshot.cs" />
+    <Compile Include="Data\Stores\InDB\RecipientStoreInDB.cs" />
+    <Compile Include="Data\Stores\InMemory\RecipientStoreInMemory.cs" />
     <Compile Include="Data\TestData.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
     <Compile Include="Infrastructure\Commands\CloseWindowCommand.cs" />
@@ -321,7 +324,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="appsettings.json" />
+    <None Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

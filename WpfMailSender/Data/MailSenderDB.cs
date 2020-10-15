@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WpfMailSender.Data
 {
-    class MailSenderDB:DbContext
+    public class MailSenderDB:DbContext
     {
         public  DbSet<Recipient> Recipients { get; set; }
 
