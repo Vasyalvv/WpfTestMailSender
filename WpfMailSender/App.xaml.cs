@@ -1,7 +1,9 @@
 ﻿using LibMailSender.Interfaces;
 using LibMailSender.Service;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -22,6 +24,10 @@ namespace WpfMailSender
 
         public static IHost Hosting => _Hosting
             ?? Host.CreateDefaultBuilder(Environment.GetCommandLineArgs())
+            .ConfigureAppConfiguration(cfg=>cfg.AddJsonFile("appsettings.json",true,true))
+            .ConfigureLogging(log=>
+            log.AddConsole()
+            .AddDebug())
             .ConfigureServices(ConfigureServices)
             .Build();
 
