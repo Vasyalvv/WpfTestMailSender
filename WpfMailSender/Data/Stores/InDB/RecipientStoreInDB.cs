@@ -9,39 +9,28 @@ using System.Threading.Tasks;
 
 namespace WpfMailSender.Data.Stores.InDB
 {
-    public class RecipientStoreInDB : IStore<Recipient>
+    public class RecipientsStoreInDB : StoreInDB<Recipient>
     {
-        private readonly MailSenderDB _db;
+        public RecipientsStoreInDB(MailSenderDB db) : base(db) { }
+    }
 
-        public RecipientStoreInDB(MailSenderDB db)
-        {
-            _db = db;
-        }
+    public class ServersStoreInDB : StoreInDB<Server>
+    {
+        public ServersStoreInDB(MailSenderDB db) : base(db) { }
+    }
 
-        public Recipient Add(Recipient Item)
-        {
-            _db.Entry(Item).State = EntityState.Added;
-            _db.SaveChanges();
-            return Item;
-        }
+    public class SendersStoreInDB : StoreInDB<Sender>
+    {
+        public SendersStoreInDB(MailSenderDB db) : base(db) { }
+    }
 
-        public void Delete(int Id)
-        {
-            var item = GetById(Id);
-            if (item is null) return;
-            _db.Entry(item).State = EntityState.Deleted;
-            _db.SaveChanges();
-        }
+    public class MessagesStoreInDB : StoreInDB<Message>
+    {
+        public MessagesStoreInDB(MailSenderDB db) : base(db) { }
+    }
 
-        public IEnumerable<Recipient> GetAll()=> _db.Recipients.ToArray();
-
-
-        public Recipient GetById(int Id) => _db.Recipients.FirstOrDefault(r => r.Id == Id);
-
-        public void Update(Recipient item)
-        {
-            _db.Entry(item).State = EntityState.Modified;
-            _db.SaveChanges();
-        }
+    public class SchedulerTasksStoreInDB : StoreInDB<SchedulerTask>
+    {
+        public SchedulerTasksStoreInDB(MailSenderDB db) : base(db) { }
     }
 }

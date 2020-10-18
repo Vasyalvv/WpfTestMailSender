@@ -286,6 +286,7 @@
     </Compile>
     <Compile Include="Data\Mirgations\MailSenderDBModelSnapshot.cs" />
     <Compile Include="Data\Stores\InDB\RecipientStoreInDB.cs" />
+    <Compile Include="Data\Stores\InDB\StoreInDB.cs" />
     <Compile Include="Data\Stores\InMemory\RecipientStoreInMemory.cs" />
     <Compile Include="Data\TestData.cs" />
     <Compile Include="Infrastructure\Commands\Base\Command.cs" />
