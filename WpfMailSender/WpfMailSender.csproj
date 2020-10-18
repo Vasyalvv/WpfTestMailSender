@@ -166,8 +166,10 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=3.1.9.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.3.1.9\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Identity.Client, Version=4.20.1.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Identity.Client.4.20.1\lib\net461\Microsoft.Identity.Client.dll</HintPath>
+    <Reference Include="Microsoft.Identity.Client, Version=4.21.0.0, Culture=neutral, PublicKeyToken=0a613f4dd989e8ae, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Identity.Client.4.21.0\lib\net461\Microsoft.Identity.Client.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.8.0\lib\net461\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
