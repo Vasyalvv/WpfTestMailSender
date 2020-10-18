@@ -72,6 +72,8 @@ namespace WpfMailSender
             services.AddSingleton<IStore<Message>, MessagesStoreInDB>();
             services.AddSingleton<IStore<SchedulerTask>, SchedulerTasksStoreInDB>();
             //services.AddSingleton<IStore<Recipient>, RecipientStoreInMemory>();
+
+            services.AddSingleton<IMailSchedulerService, TaskMailSchedulerService>();
         }
 
         protected override void OnStartup(StartupEventArgs e)

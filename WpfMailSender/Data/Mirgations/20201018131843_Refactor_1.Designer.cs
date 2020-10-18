@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WpfMailSender.Data;
 
 namespace WpfMailSender.Data.Mirgations
 {
     [DbContext(typeof(MailSenderDB))]
-    partial class MailSenderDBModelSnapshot : ModelSnapshot
+    [Migration("20201018131843_Refactor_1")]
+    partial class Refactor_1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

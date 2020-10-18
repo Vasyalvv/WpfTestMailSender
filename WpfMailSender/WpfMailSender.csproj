@@ -42,6 +42,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -51,6 +52,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome5, Version=2.0.8.0, Culture=neutral, PublicKeyToken=9cfaf01297a008f8, processorArchitecture=MSIL">
@@ -283,6 +285,10 @@
     <Compile Include="Data\Mirgations\20201015165052_SchedulerTasks.cs" />
     <Compile Include="Data\Mirgations\20201015165052_SchedulerTasks.designer.cs">
       <DependentUpon>20201015165052_SchedulerTasks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\Mirgations\20201018131843_Refactor_1.cs" />
+    <Compile Include="Data\Mirgations\20201018131843_Refactor_1.designer.cs">
+      <DependentUpon>20201018131843_Refactor_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Data\Mirgations\MailSenderDBModelSnapshot.cs" />
     <Compile Include="Data\Stores\InDB\RecipientStoreInDB.cs" />
