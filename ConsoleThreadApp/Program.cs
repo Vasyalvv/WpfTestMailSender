@@ -59,11 +59,8 @@ namespace ConsoleThreadApp
 
         static void ConsoleTitleTimer()
         {
-            while (__TimerThreadEnable)
-            {
-                Console.Title = DateTime.Now.ToString("HH:mm:ss.ffff");
-                Thread.Sleep(10);
-            }
+            Console.Title = DateTime.Now.ToString("HH:mm:ss.ffff");
+            Thread.Sleep(10);
         }
 
         static void Factorial()

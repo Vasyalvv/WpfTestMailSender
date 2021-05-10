@@ -73,7 +73,7 @@ namespace WpfMailSender.ViewModels
         private readonly IMailService _MailService;
         private readonly IServerStorage _ServerStorage;
         private readonly ISenderStorage _SenderStorage;
-        private readonly IRecipientStorage _RecipientStorage;
+        private readonly IStore<Recipient> _RecipientStorage;
         private readonly IMessageStorage _MessageStorage;
         private readonly string __DataFileName = "DataLists.xml";
         #endregion
@@ -277,7 +277,7 @@ namespace WpfMailSender.ViewModels
                 Description = description,
             };
 
-            _RecipientStorage.Items.Add(recipient);
+            _RecipientStorage.Add(recipient);
             Recipients.Add(recipient);
         }
         #endregion
@@ -316,7 +316,7 @@ namespace WpfMailSender.ViewModels
         }
         #endregion
 
-        #region DeleteSenderCommand
+        #region DeleteRecipientCommand
 
         private ICommand _DeleteRecipientCommand;
 
@@ -388,12 +388,13 @@ namespace WpfMailSender.ViewModels
 
             _ServerStorage.Load();
             _SenderStorage.Load();
-            _RecipientStorage.Load();
+            //_RecipientStorage.Load();
+            _RecipientStorage.GetAll();
             _MessageStorage.Load();
 
             Servers = new ObservableCollection<Server>(_ServerStorage.Items);
             Senders = new ObservableCollection<Sender>(_SenderStorage.Items);
-            Recipients = new ObservableCollection<Recipient>(_RecipientStorage.Items);
+            Recipients = new ObservableCollection<Recipient>(_RecipientStorage.GetAll());
             Messages = new ObservableCollection<Message>(_MessageStorage.Items);
         }
         #endregion
@@ -413,7 +414,12 @@ namespace WpfMailSender.ViewModels
 
             _ServerStorage.SaveChanges();
             _SenderStorage.SaveChanges();
-            _RecipientStorage.SaveChanges();
+            //_RecipientStorage.SaveChanges();
+            //_RecipientStorage.Update();   <-----Доделать
+            foreach (var item in _RecipientStorage.GetAll())
+            {
+                _RecipientStorage.Update(item);
+            }
             _MessageStorage.SaveChanges();
         }
         #endregion
@@ -421,20 +427,19 @@ namespace WpfMailSender.ViewModels
         #endregion
 
         public WpfMailSenderWindowViewModel(IMailService MailService,
-            IServerStorage ServerStorage, ISenderStorage SenderStorage,
-            IRecipientStorage RecipientStorage, IMessageStorage MessageStorage)
+            IStore<Recipient> RecipientStorage)
         {
 
             _MailService = MailService;
 
-            _ServerStorage = ServerStorage;
-            _SenderStorage = SenderStorage;
+            //_ServerStorage = ServerStorage;
+            //_SenderStorage = SenderStorage;
             _RecipientStorage = RecipientStorage;
-            _MessageStorage = MessageStorage;
+            //_MessageStorage = MessageStorage;
 
             if (Servers is null) Servers = new ObservableCollection<Server>();
             if (Senders is null) Senders = new ObservableCollection<Sender>();
-            if (Recipients is null) Recipients = new ObservableCollection<Recipient>();
+            if (Recipients is null) Recipients = new ObservableCollection<Recipient>(RecipientStorage.GetAll());
             if (Messages is null) Messages = new ObservableCollection<Message>();
         }
     }

@@ -44,11 +44,13 @@
     <Compile Include="Interfaces\IEncryptorService.cs" />
     <Compile Include="Interfaces\IMailService.cs" />
     <Compile Include="Interfaces\IStorage.cs" />
+    <Compile Include="Interfaces\IStore.cs" />
     <Compile Include="MailScheduler.cs" />
     <Compile Include="MailSenderService.cs" />
     <Compile Include="Models\Base\Entity.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Recipient.cs" />
+    <Compile Include="Models\SchedulerTask.cs" />
     <Compile Include="Models\Sender.cs" />
     <Compile Include="Models\Server.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
