@@ -7,13 +7,12 @@ using System.Text;
 
 namespace LibMailSender.Models
 {
-    public class SchedulerTask:Entity
+    public class SchedulerTask : Entity
     {
         public DateTime Time { get; set; }
-            public Server Server { get; set; }
-            public Sender Sender { get; set; }
-
-        ICollection<Recipient> Recipients { get; set; }
+        public Server Server { get; set; }
+        public Sender Sender { get; set; }
+        public ICollection<Recipient> Recipients { get; set; }
         public Message Message { get; set; }
 
     }

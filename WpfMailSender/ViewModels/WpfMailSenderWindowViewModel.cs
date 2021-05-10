@@ -71,10 +71,13 @@ namespace WpfMailSender.ViewModels
         public Recipient SelectedRecipient { get => _SelectedRecipient; set => Set(ref _SelectedRecipient, value); }
 
         private readonly IMailService _MailService;
-        private readonly IServerStorage _ServerStorage;
-        private readonly ISenderStorage _SenderStorage;
+        private readonly IStore<Server> _ServerStorage;
+        private readonly IStore<Sender> _SenderStorage;
         private readonly IStore<Recipient> _RecipientStorage;
-        private readonly IMessageStorage _MessageStorage;
+        private readonly IStore<Message> _MessageStorage;
+        private readonly IStore<SchedulerTask> _SchedulerTaskStorage;
+        private readonly IMailSchedulerService _MailSchedulerService;
+
         private readonly string __DataFileName = "DataLists.xml";
         #endregion
 
@@ -107,7 +110,7 @@ namespace WpfMailSender.ViewModels
                 Password = password
             };
 
-            _ServerStorage.Items.Add(server);
+            _ServerStorage.Add(server);
             Servers.Add(server);
         }
         #endregion
@@ -198,7 +201,7 @@ namespace WpfMailSender.ViewModels
                 Description = description,
             };
 
-            _SenderStorage.Items.Add(sender);
+            _SenderStorage.Add(sender);
             Senders.Add(sender);
         }
         #endregion
@@ -386,17 +389,20 @@ namespace WpfMailSender.ViewModels
             //Recipients = new ObservableCollection<Recipient>(data.Recipients);
             //Messages = new ObservableCollection<Message>(data.Messages);
 
-            _ServerStorage.Load();
-            _SenderStorage.Load();
+            //_ServerStorage.Load();
+            //_SenderStorage.Load();
             //_RecipientStorage.Load();
-            _RecipientStorage.GetAll();
-            _MessageStorage.Load();
+            //_RecipientStorage.GetAll();
+            //_MessageStorage.Load();
 
-            Servers = new ObservableCollection<Server>(_ServerStorage.Items);
-            Senders = new ObservableCollection<Sender>(_SenderStorage.Items);
+            Servers = new ObservableCollection<Server>(_ServerStorage.GetAll());
+            Senders = new ObservableCollection<Sender>(_SenderStorage.GetAll());
             Recipients = new ObservableCollection<Recipient>(_RecipientStorage.GetAll());
-            Messages = new ObservableCollection<Message>(_MessageStorage.Items);
+            Messages = new ObservableCollection<Message>(_MessageStorage.GetAll());
         }
+
+        private bool CanLoadDataCommadnExecuted(object p) => true;
+
         #endregion
 
         #region SaveDataCommand
@@ -412,35 +418,47 @@ namespace WpfMailSender.ViewModels
 
             //data.SaveToFile(__DataFileName);
 
-            _ServerStorage.SaveChanges();
-            _SenderStorage.SaveChanges();
-            //_RecipientStorage.SaveChanges();
-            //_RecipientStorage.Update();   <-----Доделать
+            foreach (var item in Servers)
+            {
+                _ServerStorage.Update(item);
+            }
+
+            foreach (var item in Senders)
+            {
+                _SenderStorage.Update(item);
+            }
             foreach (var item in _RecipientStorage.GetAll())
             {
                 _RecipientStorage.Update(item);
             }
-            _MessageStorage.SaveChanges();
+
+            foreach (var item in Messages)
+            {
+                _MessageStorage.Update(item);
+            }
         }
         #endregion
 
         #endregion
 
         public WpfMailSenderWindowViewModel(IMailService MailService,
-            IStore<Recipient> RecipientStorage)
+            IStore<Recipient> RecipientsStorage,
+            IStore<Server> ServersStorage,
+            IStore<Sender> SendersStorage,
+            IStore<Message> MessagesStorage,
+            IStore<SchedulerTask> SchedulerTasksStorage,
+            IMailSchedulerService MailSchedulerService)
         {
 
             _MailService = MailService;
+            _MailSchedulerService = MailSchedulerService;
 
-            //_ServerStorage = ServerStorage;
-            //_SenderStorage = SenderStorage;
-            _RecipientStorage = RecipientStorage;
-            //_MessageStorage = MessageStorage;
+            _RecipientStorage = RecipientsStorage;
+            _SenderStorage = SendersStorage;
+            _MessageStorage = MessagesStorage;
+            _ServerStorage = ServersStorage;
+            _SchedulerTaskStorage = SchedulerTasksStorage;
 
-            if (Servers is null) Servers = new ObservableCollection<Server>();
-            if (Senders is null) Senders = new ObservableCollection<Sender>();
-            if (Recipients is null) Recipients = new ObservableCollection<Recipient>(RecipientStorage.GetAll());
-            if (Messages is null) Messages = new ObservableCollection<Message>();
         }
     }
 }
